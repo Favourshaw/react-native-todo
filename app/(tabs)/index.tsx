@@ -1,4 +1,5 @@
 import { createHomeStyles } from "@/assets/styles/home.styles";
+import Header from "@/components/Header";
 import useTheme from "@/hooks/useTheme";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar, Text, TouchableOpacity } from "react-native";
@@ -16,6 +17,7 @@ export default function Index() {
     >
       <StatusBar barStyle={colors.statusBarStyle} />
       <SafeAreaView style={homeStyles.safeArea}>
+        <Header />
         <Text>Edit app/index.tsx to edit this screen. </Text>
         <TouchableOpacity onPress={toggleDarkMode} style={{ marginTop: 20 }}>
           <Text>toggle dark mode</Text>
