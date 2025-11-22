@@ -17,7 +17,8 @@ const Header = () => {
     ? todos.filter((todo) => todo.isCompleted).length
     : 0;
   const totalCount = todos ? todos.length : 0;
-  const progressPercentage = totalCount ? completedCount / totalCount : 0;
+  const progressPercentage =
+    totalCount > 0 ? (completedCount / totalCount) * 100 : 0;
   return (
     <View style={homeStyles.header}>
       <View style={homeStyles.titleContainer}>
@@ -34,7 +35,7 @@ const Header = () => {
           </Text>
         </View>
       </View>
-      {true && (
+      {totalCount > 0 && (
         <View style={homeStyles.progressContainer}>
           <View style={homeStyles.progressBarContainer}>
             <View style={homeStyles.progressBar}>
