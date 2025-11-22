@@ -10,6 +10,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useMutation, useQuery } from "convex/react";
 import { LinearGradient } from "expo-linear-gradient";
 import {
+  Alert,
   FlatList,
   StatusBar,
   Text,
@@ -21,7 +22,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 type Todo = Doc<"todos">;
 
 export default function Index() {
-  const { toggleDarkMode, colors } = useTheme();
+  const { colors } = useTheme();
 
   const homeStyles = createHomeStyles(colors);
 
@@ -38,6 +39,27 @@ export default function Index() {
     } catch (error) {
       console.error("Failed to toggle todo:", error);
     }
+  };
+
+  const deleteTodo = useMutation(api.todos.deleteTodo);
+
+  const handleDeleteTodo = async (id: Id<"todos">) => {
+    Alert.alert(
+      "Delete Todo",
+      "Are you sure you want to delete this todo?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => deleteTodo({ id }),
+        },
+      ],
+      { cancelable: true }
+    );
   };
 
   const renderTodoItem = ({ item }: { item: Todo }) => {
@@ -97,7 +119,10 @@ export default function Index() {
                   <Ionicons name="pencil" size={16} color="#fff" />
                 </LinearGradient>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => {}} activeOpacity={0.8}>
+              <TouchableOpacity
+                onPress={() => handleDeleteTodo(item._id)}
+                activeOpacity={0.8}
+              >
                 <LinearGradient
                   colors={colors.gradients.danger}
                   style={homeStyles.actionButton}
